@@ -22,14 +22,13 @@ public class UserController {
     public String saveOrUpdate(Model model, User user) {
         userDAO.save(user);
         System.out.printf("Size: " + userDAO.getAll().size());
-
-        return "register-user";
+        return "session03/register-user";
     }
 
     @GetMapping("list")
     public String list(Model model) {
         model.addAttribute("users", userDAO.getAll());
-        return "view-user";
+        return "session03/view-user";
     }
 
     @GetMapping("/edit/{username}")
@@ -37,13 +36,13 @@ public class UserController {
         User user = userDAO.findByUserName(username);
         model.addAttribute("user", user);
         model.addAttribute("action", "/saveOrUpdate");
-        return "register-user";
+        return "session03/register-user";
     }
 
     @GetMapping("/delete/{username}")
     public String delete(@PathVariable String username, Model model) {
         userDAO.delete(username);
         model.addAttribute("users", userDAO.getAll());
-        return "view-user";
+        return "session03/view-user";
     }
 }

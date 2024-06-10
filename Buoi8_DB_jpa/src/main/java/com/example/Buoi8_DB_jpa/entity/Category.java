@@ -1,5 +1,6 @@
 package com.example.Buoi8_DB_jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,5 +29,6 @@ public class Category {
     private String categoryName;
 
     @OneToMany(fetch = FetchType.LAZY , mappedBy = "category")
+    @JsonIgnoreProperties
     private Set<Product> products;
 }

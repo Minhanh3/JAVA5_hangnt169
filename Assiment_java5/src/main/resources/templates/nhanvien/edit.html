@@ -1,0 +1,180 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .modal-content {
+            width: 300px;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            background-color: #343a40;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #474c50;
+        }
+
+        .content {
+            margin-left: 200px;
+            padding: 20px;
+        }
+
+        .sidebar .dropdown-menu {
+            background-color: #474c50;
+            border: none;
+            margin-left: 20px;
+        }
+
+        .sidebar .dropdown-item {
+            color: #fff;
+            padding: 10px 20px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar .dropdown-item:hover {
+            background-color: #343a40;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="headTag">
+</div>
+<div class="content">
+    <div class="container mt-5">
+        <h2>Edit Nhân Viên</h2>
+        <form th:action="@{/nhan-vien/saveOrUpdate}" th:object="${nhanVien1}" method="post" class="row g-3">
+            <div class="col-md-6">
+                <input type="hidden" th:field="*{id}">
+                <div class="mb-3">
+                    <label for="tenNhanVien" class="form-label">Tên nhân viên</label>
+                    <input type="text" class="form-control" th:field="*{ten}" id="tenNhanVien"
+                           aria-describedby="tenNhanVienHelp" placeholder="Nhập tên nhân viên">
+                    <small id="tenNhanVienHelp" class="form-text text-muted">Tên nhân viên bao gồm tên đệm và
+                        tên</small>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Giới tính</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" th:field="*{gioiTinh}" th:value="'Nam'"
+                               id="gioiTinhNam">
+                        <label class="form-check-label" for="gioiTinhNam">Nam</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" th:field="*{gioiTinh}" th:value="'Nu'"
+                               id="gioiTinhNu">
+                        <label class="form-check-label" for="gioiTinhNu">Nữ</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="ngaySinh" class="form-label">Ngày sinh</label>
+                    <input type="text" class="form-control" th:field="*{ngaySinh}" id="ngaySinh" >
+                </div>
+                <div class="mb-3">
+                    <label for="diaChi" class="form-label">Địa chỉ</label>
+                    <input type="text" class="form-control" th:field="*{diaChi}" id="diaChi"
+                           placeholder="Nhập địa chỉ">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 mt-5">
+                    <label for="soDienThoai" class="form-label">Số điện thoại</label>
+                    <input type="tel" class="form-control" th:field="*{sdt}" id="soDienThoai"
+                           placeholder="Nhập số điện thoại" pattern="[0-9]{10}">
+                </div>
+                <div class="mb-3">
+                    <label for="matKhau" class="form-label">Mật khẩu</label>
+                    <input type="password" class="form-control" th:field="*{matKhau}" id="matKhau"
+                           placeholder="Nhập mật khẩu">
+                </div>
+                <div class="mb-3">
+                    <label for="trangThai" class="form-label">Trạng thái</label>
+                    <select class="form-select" th:field="*{trangThai}" id="trangThai">
+                        <option value="0">Không hoạt động</option>
+                        <option value="1">Hoạt động</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Lưu</button>
+            </div>
+        </form>
+    </div>
+    <footer class="bg-dark text-light py-3">
+        <div class="container">
+            <p>&copy; 2023 My Website</p>
+        </div>
+    </footer>
+</div>
+<!-- Modal dialog đăng nhập -->
+<div class="modal fade" id="" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Không thay đổi phần này -->
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+<!-- Modal dialog đăng nhập -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Không thay đổi phần này -->
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

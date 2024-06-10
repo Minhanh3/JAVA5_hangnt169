@@ -63,7 +63,6 @@
                 <a href="/thuc-vat/remove/${tv.id}">
                     <button>Delete</button>
                 </a>
-                    <%--                    <a href="/giang-vien/detail/${tv.maGV}">Detail</a>--%>
             </th>
         </tr>
     </c:forEach>

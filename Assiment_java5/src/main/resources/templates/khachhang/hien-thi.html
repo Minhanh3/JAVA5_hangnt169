@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .modal-content {
+            width: 300px;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            background-color: #343a40;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #474c50;
+        }
+
+        .content {
+            margin-left: 200px;
+            padding: 20px;
+        }
+
+        .sidebar .dropdown-menu {
+            background-color: #474c50;
+            border: none;
+            margin-left: 20px;
+        }
+
+        .sidebar .dropdown-item {
+            color: #fff;
+            padding: 10px 20px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar .dropdown-item:hover {
+            background-color: #343a40;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="headTag">
+</div>
+<div class="content ">
+    <h1>Quản lý Khách Hàng</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <form th:action="@{/khach-hang/saveOrUpdate}" th:object="${khachhangs}" method="post" class="row g-3">
+                    <div class="col-md-6">
+                        <h2>Khách Hàng</h2>
+                        <div class="mb-3">
+                            <label for="ten" class="form-label">Tên Khách hàng</label>
+                            <input type="text" class="form-control" name="ten" id="ten"
+                                   aria-describedby="tenNhanVienHelp" placeholder="Nhập tên nhân viên">
+                        </div>
+                        <div class="mb-3">
+                            <label for="ngaySinh" class="form-label">Ngày sinh</label>
+                            <input type="date" class="form-control" name="ngaySinh" id="ngaySinh">
+                        </div>
+                        <div class="mb-3">
+                            <label for="diaChi" class="form-label">Địa chỉ</label>
+                            <input type="text" class="form-control" name="diaChi" id="diaChi"
+                                   placeholder="Nhập địa chỉ">
+                        </div>
+                        <div class="mb-3">
+                            <label for="quocGia" class="form-label">Quốc gia</label>
+                            <select class="form-select" name="quocGia" id="quocGia">
+                                <option value="">Chọn quốc gia</option>
+                                <option value="Việt Nam">Việt Nam</option>
+                                <option value="Mỹ">Mỹ</option>
+                                <option value="Anh">Anh</option>
+                                <!-- Thêm các quốc gia khác nếu cần -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 mt-5">
+                            <label for="soDienThoai" class="form-label">Số điện thoại</label>
+                            <input type="tel" class="form-control" name="sdt" id="soDienThoai"
+                                   placeholder="Nhập số điện thoại" pattern="[0-9]{10}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control" name="matKhau"
+                                   placeholder="Nhập mật khẩu">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Thành phố</label>
+                            <input type="text" class="form-control" name="thanhPho">
+                        </div>
+
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Lưu khách hàng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
+        <div class="input-group w-50">
+            <input type="text" class="form-control" placeholder="Tìm kiếm nhân viên...">
+            <button class="btn btn-primary" type="button">Tìm kiếm</button>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="me-2">Trạng thái:</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="statusRadio" id="statusAll" value="" checked>
+            <label class="form-check-label" for="statusAll">Tất cả</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="statusRadio" id="statusActive" value="active">
+            <label class="form-check-label" for="statusActive">Đang hoạt động</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="statusRadio" id="statusInactive" value="inactive">
+            <label class="form-check-label" for="statusInactive">Ngừng hoạt động</label>
+        </div>
+    </div>
+    <div>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th class="text-center">STT</th>
+                <th class="text-center">Mã</th>
+                <th class="text-center">Tên</th>
+                <th class="text-center">Ngày Sinh</th>
+                <th class="text-center">Số điện thoại</th>
+                <th class="text-center">Địa Chỉ</th>
+                <th class="text-center">Thành Phố</th>
+                <th class="text-center">Quốc Gia</th>
+                <th class="text-center">Mật khẩu</th>
+                <th class="text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item, stat : ${khachHangs}">
+                <td class="text-center" th:text="${stat.count}"></td>
+                <td class="text-center" th:text="${item.ma}"></td>
+                <td class="text-center" th:text="${item.ten}"></td>
+                <td class="text-center" th:text="${item.ngaySinh}"></td>
+                <td class="text-center" th:text="${item.sdt}"></td>
+                <td class="text-center" th:text="${item.diaChi}"></td>
+                <td class="text-center" th:text="${item.thanhPho}"></td>
+                <td class="text-center" th:text="${item.quocGia}"></td>
+                <td class="text-center" th:text="${item.matKhau}"></td>
+                <td class="text-center">
+                    <a class="btn btn-primary btn-sm" th:href="@{'/khach-hang/edit/' + ${item.id}}">Edit</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{'/khach-hang/delete/' + ${item.id}}">Del</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer class="bg-dark text-light py-3">
+        <div class="container">
+            <p>&copy; 2023 My Website</p>
+        </div>
+    </footer>
+</div>
+<!-- Modal dialog đăng nhập -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

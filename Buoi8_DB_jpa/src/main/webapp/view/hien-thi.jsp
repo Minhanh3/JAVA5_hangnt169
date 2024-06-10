@@ -12,6 +12,8 @@
         <th>ID</th>
         <th>Mã Category</th>
         <th>Tên</th>
+        <th>Tên</th>
+        <th>Tên</th>
         <th>Action</th>
     </tr>
     </thead>
@@ -22,10 +24,10 @@
             <th>${cs.categoryCode}</th>
             <th>${cs.categoryName}</th>
             <th>
-                <a href="/co-so/remove/${cs.id}">
+                <a href="/product/remove/${cs.id}">
                     <button>Remove</button>
                 </a>
-                <a href="/co-so/view-update/${cs.id}">
+                <a href="/product/edit/${cs.id}">
                     <button>Update</button>
                 </a>
             </th>

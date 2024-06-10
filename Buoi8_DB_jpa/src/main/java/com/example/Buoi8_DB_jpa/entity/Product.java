@@ -1,5 +1,6 @@
 package com.example.Buoi8_DB_jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +24,8 @@ public class Product {
     private Long categoryId;
 
     @ManyToOne
-    @JoinColumn(name = "category_id" , updatable = false , insertable = false)
+    @JoinColumn(name = "category_id" , updatable = false , insertable = false , referencedColumnName = "id")
+    @JsonIgnore
     private Category category;
 
     @Column(name = "product_code")
