@@ -1,143 +1,34 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .modal-content {
-            width: 300px;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            background-color: #343a40;
-            padding: 20px;
-        }
-
-        .sidebar a {
-            display: block;
-            color: #fff;
-            text-decoration: none;
-            padding: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .sidebar a:hover {
-            background-color: #474c50;
-        }
-
-        .content {
-            margin-left: 200px;
-            padding: 20px;
-        }
-
-        .sidebar .dropdown-menu {
-            background-color: #474c50;
-            border: none;
-            margin-left: 20px;
-        }
-
-        .sidebar .dropdown-item {
-            color: #fff;
-            padding: 10px 20px;
-            transition: background-color 0.3s;
-        }
-
-        .sidebar .dropdown-item:hover {
-            background-color: #343a40;
-        }
-    </style>
 </head>
 <body>
 <div th:replace="headTag">
 </div>
-<div class="content">
-    <div class="container">x
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <form th:action="@{/san-pham/updateProduct}" th:object="${spct}" method="post">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h2>Thông tin sản phẩm</h2>
-<!--                            <div class="mb-3">-->
-<!--                                <label for="sanPhamId" class="form-label">Sản phẩm</label>-->
-<!--                                <input type="text" class="form-control" th:value="${sp.id}" id="sanPhamId" name="sanPhamId" readonly>-->
-<!--                            </div>-->
-                            <div class="mb-3">
-                                <label for="idNsx" class="form-label">Tên sản phẩm</label>
-                                <select class="form-select" id="sanPhamId" name="sanPhamId">
-                                    <option value="">Chọn tên sản phẩm</option>
-                                    <option th:each="item : ${sp}" th:value="${item.id}" th:text="${item.ten}">
-                                    </option>
-                                    <!-- Các tùy chọn nhà sản xuất -->
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h2>Chi tiết sản phẩm</h2>
-                            <div class="mb-3">
-                                <label for="idNsx" class="form-label">Nhà sản xuất</label>
-                                <select class="form-select" id="idNsx" name="idNsx">
-                                    <option value="">Chọn nhà sản xuất</option>
-                                    <option th:each="item : ${nsx}" th:value="${item.id}" th:text="${item.ten}">
-                                    </option>
-                                    <!-- Các tùy chọn nhà sản xuất -->
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="idMauSac" class="form-label">Màu sắc</label>
-                                <select class="form-select" id="idMauSac" name="idMauSac">
-                                    <option value="">Chọn màu sắc</option>
-                                    <option th:each="item : ${ms}" th:value="${item.id}" th:text="${item.ten}">
-                                    </option>
-                                    <!-- Các tùy chọn màu sắc -->
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="idDongSp" class="form-label">Dòng sản phẩm</label>
-                                <select class="form-select" id="idDongSp" name="idDongSp">
-                                    <option value="">Chọn dòng sản phẩm</option>
-                                    <option th:each="item : ${dsp}" th:value="${item.id}"
-                                            th:text="${item.ten}"></option>
-                                    <!-- Các tùy chọn dòng sản phẩm -->
-                                </select>
-                            </div>
+<div class="content ">
+    <!--    <h1>Quản lý Sản Phẩm</h1>-->
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <form th:action="@{/san-pham/saveOrUpdateSanPham}" th:object="${sanPham1}" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>Edit sản phẩm</h2>
+                        <input type="hidden" th:field="*{id}"/>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Tên sản phẩm</label>
+                            <input type="text" class="form-control" th:field="*{ten}" id="ten" name="ten">
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="namBh" class="form-label">Năm bảo hành</label>
-                                <input type="number" class="form-control" th:value="${spct.namBh}" id="namBh" name="namBh">
-                            </div>
-                            <div class="mb-3">
-                                <label for="moTa" class="form-label">Mô tả</label>
-                                <textarea class="form-control" id="moTa" th:value="${spct.moTa}" name="moTa" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="soLuongTon" class="form-label">Số lượng tồn</label>
-                                <input type="number" class="form-control" th:value="${spct.soLuongTon}" id="soLuongTon" name="soLuongTon">
-                            </div>
-                            <div class="mb-3">
-                                <label for="giaNhap" class="form-label">Giá nhập</label>
-                                <input type="number" class="form-control" th:value="${spct.giaNhap}" id="giaNhap" name="giaNhap">
-                            </div>
-                            <div class="mb-3">
-                                <label for="giaBan" class="form-label">Giá bán</label>
-                                <input type="number" class="form-control" th:value="${spct.giaBan}" id="giaBan" name="giaBan">
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Lưu</button>
-                </form>
-            </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Sản Phẩm</button>
+            </form>
         </div>
+    </div>
+    <div th:replace="headTagSanPham">
     </div>
     <footer class="bg-dark text-light py-3">
         <div class="container">
@@ -145,61 +36,8 @@
         </div>
     </footer>
 </div>
-<!-- Modal dialog đăng nhập -->
-<div class="modal fade" id="" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="">Login</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Không thay đổi phần này -->
+<div th:replace="LoginFooter">
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-<!-- Modal dialog đăng nhập -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Login</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Không thay đổi phần này -->
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

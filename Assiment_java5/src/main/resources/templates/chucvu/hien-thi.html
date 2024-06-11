@@ -57,34 +57,27 @@
 <div th:replace="headTag">
 </div>
 <div class="content ">
-    <h1>Quản lý Dòng Sản Phẩm</h1>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <form th:action="@{/dong-sp/saveOrUpdate}" th:object="${dongSp}" method="post">
-                    <div class="row justify-content-center">
-                        <div class="col-md-8 text-center">
-                            <h2>Thông tin Dòng sản phẩm</h2>
-                            <input type="hidden" th:field="*{id}"/>
-                            <div class="mb-3">
-                                <label for="ma" class="form-label">Mã Dòng sản phẩm</label>
-                                <input type="text" class="form-control" th:field="*{ma}" id="ma" name="ma" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="ten" class="form-label">Tên Dòng sản phẩm</label>
-                                <input type="text" class="form-control" th:field="*{ten}" id="ten" name="ten" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Lưu</button>
-                            <a href="/dong-sp/list" class="btn btn-secondary">Hủy</a>
-                        </div>
+                <h3>Thêm Mới chức vụ</h3>
+                <form th:action="@{/chuc-vu/saveOrUpdate}" th:object="${chucVuForm}" method="post">
+                    <div class="mb-3">
+                        <label for="ma" class="form-label">Mã Chức vụ</label>
+                        <input type="text" class="form-control" id="ma" name="ma" th:value="${chucVuForm.ma}" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="ten" class="form-label">Tên chức vụ</label>
+                        <input type="text" class="form-control" id="ten" name="ten" th:value="${chucVuForm.ten}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
                 </form>
             </div>
         </div>
     </div>
     <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
         <div class="input-group w-50">
-            <input type="text" class="form-control" placeholder="Tìm kiếm dòng sản phẩm...">
+            <input type="text" class="form-control" placeholder="Tìm kiếm màu sắc...">
             <button class="btn btn-primary" type="button">Tìm kiếm</button>
         </div>
     </div>
@@ -114,33 +107,33 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item, stat : ${dongSp1}">
+            <tr th:each="item, stat : ${chucVu}">
                 <td class="text-center" th:text="${stat.count}"></td>
                 <td class="text-center" th:text="${item.ma}"></td>
                 <td class="text-center" th:text="${item.ten}"></td>
                 <td class="text-center">
-                    <a class="btn btn-primary btn-sm" th:href="@{'/dong-sp/edit/' + ${item.id}}">Edit</a>
-                    <a class="btn btn-danger btn-sm" th:href="@{'/dong-sp/delete/' + ${item.id}}">Del</a>
+                    <a class="btn btn-primary btn-sm" th:href="@{'/chuc-vu/edit/' + ${item.id}}">Edit</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{'/chuc-vu/delete/' + ${item.id}}" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Del</a>
                 </td>
             </tr>
             </tbody>
         </table>
-    </div>
-    <div class="text-center">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/dong-sp/list(page=${currentPage - 1})}">Previous</a>
-                </li>
-                <li class="page-item" th:classappend="${currentPage == i} ? 'active'"
-                    th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-                    <a class="page-link" th:href="@{/dong-sp/list(page=${i})}" th:text="${i + 1}"></a>
-                </li>
-                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
-                    <a class="page-link" th:href="@{/dong-sp/list(page=${currentPage + 1})}">Next</a>
-                </li>
-            </ul>
-        </nav>
+        <div class="text-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                        <a class="page-link" th:href="@{/chuc-vu/listCv(page=${currentPage - 1})}">Previous</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage == i} ? 'active'"
+                        th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                        <a class="page-link" th:href="@{/chuc-vu/listCv(page=${i})}" th:text="${i + 1}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                        <a class="page-link" th:href="@{/chuc-vu/listCv(page=${currentPage + 1})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
     <footer class="bg-dark text-light py-3">
         <div class="container">

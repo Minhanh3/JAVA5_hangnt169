@@ -52,7 +52,7 @@ public class NhanVien {
     @Column(name = "TrangThai")
     private Integer trangThai;
 
-    @OneToMany(fetch = FetchType.LAZY , mappedBy = "nhanVien")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "nhanVien")
     @JsonIgnoreProperties
     private List<HoaDon> hoaDons;
 

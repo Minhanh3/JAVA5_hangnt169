@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lịch Sử Hóa Đơn</title>
+    <!-- Thêm các thẻ meta và link CSS cần thiết -->
+
+</head>
+<body>
+<div th:replace="headTag">
+</div>
+<h1>Lịch Sử Hóa Đơn</h1>
+<div th:if="${thongBao}" class="alert alert-success" role="alert">
+    <span th:text="${thongBao}"></span>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Mã Hóa Đơn</th>
+        <th>Sản Phẩm</th>
+        <th>Ngày Tạo</th>
+        <th>Khách Hàng</th>
+        <th>Nhân Viên</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${lichSuHoaDon}">
+        <td th:text="${item.hoaDon.ma}"></td>
+        <td th:text="${item.chiTietSp.sanPham.ten}"></td>
+        <td th:text="${item.hoaDon.ngayTao}"></td>
+        <td th:text="${item.hoaDon.khachHang.ten}"></td>
+        <td th:text="${item.hoaDon.nhanVien.ten}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

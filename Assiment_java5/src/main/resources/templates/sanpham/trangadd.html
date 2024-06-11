@@ -56,10 +56,12 @@
 <div th:replace="headTag">
 </div>
 <div class="content">
-    <div class="container">x
+    <div class="container">
+        <a class="btn btn-primary btn-sm" href="/san-pham/list">Quay lại trang sản phẩm</a>
+
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <form th:action="@{/san-pham/saveOrUpdate}" th:object="${sanPham}" method="post">
+                <form th:action="@{/san-pham/saveOrUpdate}" th:object="${CtSanPham}" method="post">
                     <div class="row">
                         <div class="col-md-6">
                             <h2>Thông tin sản phẩm</h2>

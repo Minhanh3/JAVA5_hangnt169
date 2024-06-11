@@ -58,12 +58,31 @@
 </div>
 <div class="content ">
     <h1>Quản lý Nhà Sản Xuất</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form th:action="@{/nha-sx/saveOrUpdate}" th:object="${nsx2}" method="post">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 text-center">
+                        <h2>Thông tin Nhà Sản Xuất</h2>
+                        <div class="mb-3">
+                            <label for="ma" class="form-label">Mã Nhà Sản Xuất</label>
+                            <input type="text" class="form-control" th:field="*{ma}" id="ma" name="ma">
+                        </div>
+                        <div class="mb-3">
+                            <label for="ten" class="form-label">Tên Nhà Sản Xuất</label>
+                            <input type="text" class="form-control" th:field="*{ten}" id="ten" name="ten">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
         <div class="input-group w-50">
             <input type="text" class="form-control" placeholder="Tìm kiếm nhà sản xuất...">
             <button class="btn btn-primary" type="button">Tìm kiếm</button>
         </div>
-        <a href="/nha-sx/trangadd" class="btn btn-success">Thêm mới</a>
     </div>
     <div class="mb-3">
         <label class="me-2">Trạng thái:</label>
@@ -96,12 +115,28 @@
                 <td class="text-center" th:text="${item.ma}"></td>
                 <td class="text-center" th:text="${item.ten}"></td>
                 <td class="text-center">
-                    <a class="btn btn-primary btn-sm" th:href="@{'/edit/' + ${item.id}}">Edit</a>
-                    <a class="btn btn-danger btn-sm" th:href="@{'/delete/' + ${item.id}}">Del</a>
+                    <a class="btn btn-primary btn-sm" th:href="@{/nha-sx/edit/{id}(id=${item.id})}">Edit</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{/nha-sx/delete/{id}(id=${item.id})}">Del</a>
                 </td>
             </tr>
             </tbody>
         </table>
+        <div class="text-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                        <a class="page-link" th:href="@{/nha-sx/list(page=${currentPage - 1})}">Previous</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage == i} ? 'active'"
+                        th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                        <a class="page-link" th:href="@{/nha-sx/list(page=${i})}" th:text="${i + 1}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                        <a class="page-link" th:href="@{/nha-sx/list(page=${currentPage + 1})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
     <footer class="bg-dark text-light py-3">
         <div class="container">

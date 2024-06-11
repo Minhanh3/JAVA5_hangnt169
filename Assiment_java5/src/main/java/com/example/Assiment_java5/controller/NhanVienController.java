@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -62,6 +63,13 @@ public class NhanVienController {
     public String delete(@PathVariable("id") Integer id) {
         nhanVienService.deleteById(id);
         return "redirect:/nhan-vien/list";
+    }
+
+    @GetMapping("/search")
+    public String searchNhanVienByName(@RequestParam("ten") String ten, Model model) {
+        List<NhanVien> result = nhanVienService.findByTenContainingIgnoreCase(ten);
+        model.addAttribute("nhanVien", result);
+        return "nhanvien/hien-thi :: nhan-vien-table"; // Trả về chỉ phần table để cập nhật kết quả mà không làm mới toàn bộ trang
     }
 
     private String generateRandomCode(int length) {

@@ -13,20 +13,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "HoaDonChiTiet")
 public class HoaDonChiTiet {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idHoaDonChiTiet")
+    private Integer idHoaDonChiTiet;
 
-    //    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer id;
-    @EmbeddedId
-    private HoaDonChiTietId id;
+    @Column(name = "IdHoaDon")
+    private Integer idHoaDon;
 
     @ManyToOne
-    @MapsId("idHoaDon")
     @JoinColumn(name = "IdHoaDon", insertable = false, updatable = false)
     private HoaDon hoaDon;
 
+    @Column(name = "IdChiTietSP")
+    private Integer idChiTietSP;
+
     @ManyToOne
-    @MapsId("idChiTietSp")
     @JoinColumn(name = "IdChiTietSP", insertable = false, updatable = false)
     private ChiTietSp chiTietSp;
 

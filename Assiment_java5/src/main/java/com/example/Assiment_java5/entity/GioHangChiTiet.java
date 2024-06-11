@@ -30,5 +30,4 @@ public class GioHangChiTiet {
 
     @Column(name = "DonGiaKhiGiam")
     private Double donGiaKhiGiam;
-
 }

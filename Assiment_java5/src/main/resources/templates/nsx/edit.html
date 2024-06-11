@@ -52,22 +52,24 @@
         }
     </style>
 </head>
-<body><div th:replace="headTag">
+<body>
+<div th:replace="headTag">
 </div>
 <div class="content">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <form th:action="${action}" th:object="${dongSp}" method="post">
+                <form th:action="@{/nha-sx/saveOrUpdate}" th:object="${nsx5}" method="post">
                     <div class="row justify-content-center">
                         <div class="col-md-8 text-center">
-                            <h2>Thông tin Dòng sản phẩm</h2>
+                            <h2>Edit Nhà Sản Xuất</h2>
+                            <input type="hidden" th:field="*{id}" />
                             <div class="mb-3">
-                                <label for="ma" class="form-label">Mã Dòng sản phẩm</label>
+                                <label for="ma" class="form-label">Mã Nhà Sản Xuất</label>
                                 <input type="text" class="form-control" th:field="*{ma}" id="ma" name="ma">
                             </div>
                             <div class="mb-3">
-                                <label for="ten" class="form-label">Tên dòng sản phẩm</label>
+                                <label for="ten" class="form-label">Tên Nhà Sản Xuất</label>
                                 <input type="text" class="form-control" th:field="*{ten}" id="ten" name="ten">
                             </div>
                             <button type="submit" class="btn btn-primary">Lưu</button>

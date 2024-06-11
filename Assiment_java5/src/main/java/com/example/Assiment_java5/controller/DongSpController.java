@@ -4,12 +4,16 @@ import com.example.Assiment_java5.entity.DongSp;
 import com.example.Assiment_java5.repository.DongSpRepo;
 import com.example.Assiment_java5.service.DongSpService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
@@ -23,16 +27,14 @@ public class DongSpController {
     private DongSpRepo dongSpRepo;
 
     @GetMapping("list")
-    public String hienThi(Model model) {
-        model.addAttribute("dongSp", dongSpService.getAllDongSp());
+    public String hienThi(@RequestParam(defaultValue = "0") int page, Model model) {
+        Pageable pageable = PageRequest.of(page, 10); // Mỗi trang 10 phần tử
+        Page<DongSp> dongSps = dongSpRepo.findAll(pageable);
+        model.addAttribute("dongSp1", dongSps.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", dongSps.getTotalPages());
+        model.addAttribute("dongSp", new DongSp());
         return "dongsp/hien-thi";
-    }
-
-    @GetMapping("trangadd")
-    public String showAddForm(DongSp dongSp, Model model) {
-        model.addAttribute("dongSpForm", dongSp);
-        model.addAttribute("action", "/dong-sp/saveOrUpdate");
-        return "dongsp/trangadd";
     }
 
     @GetMapping("/edit/{id}")
@@ -40,11 +42,17 @@ public class DongSpController {
         Optional<DongSp> dongSpOptional = dongSpRepo.findById(id);
         if (dongSpOptional.isPresent()) {
             model.addAttribute("dongSpForm", dongSpOptional.get());
-            model.addAttribute("action", "/dong-sp/saveOrUpdate");
-            return "dongsp/trangadd";
+            model.addAttribute("action", "/dong-sp/update"); // Đường dẫn cập nhật dòng sản phẩm
+            return "dongsp/edit"; // Trang chỉnh sửa
         } else {
             return "redirect:/dong-sp/list";
         }
+    }
+
+    @PostMapping("/update")
+    public String update(DongSp dongSp) {
+        dongSpService.save(dongSp);
+        return "redirect:/dong-sp/list"; // Chuyển hướng về trang hiển thị
     }
 
     @PostMapping("saveOrUpdate")

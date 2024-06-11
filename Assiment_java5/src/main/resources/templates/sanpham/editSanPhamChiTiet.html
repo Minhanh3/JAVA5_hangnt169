@@ -1,0 +1,106 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="headTag">
+</div>
+<div class="content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <form th:action="@{/san-pham/updateProduct}" th:object="${spct}" method="post">
+                    <input type="hidden" th:field="*{id}"/> <!-- Truyền ID của đối tượng -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2>Thông tin sản phẩm</h2>
+
+                            <div class="mb-3">
+                                <label for="sanPhamId" class="form-label">Tên sản phẩm</label>
+                                <select class="form-select" id="sanPhamId" name="sanPhamId" required>
+                                    <option value="">Chọn tên sản phẩm</option>
+                                    <option th:each="item : ${sp}" th:value="${item.id}" th:text="${item.ten}"
+                                            th:selected="${item.id == spct.sanPham.id}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h2>Chi tiết sản phẩm</h2>
+                            <div class="mb-3">
+                                <label for="idNsx" class="form-label">Nhà sản xuất</label>
+                                <select class="form-select" id="idNsx" name="idNsx" required>
+                                    <option value="">Chọn nhà sản xuất</option>
+                                    <option th:each="item : ${nsx}" th:value="${item.id}" th:text="${item.ten}"
+                                            th:selected="${item.id == spct.nsx.id}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="idMauSac" class="form-label">Màu sắc</label>
+                                <select class="form-select" id="idMauSac" name="idMauSac" required>
+                                    <option value="">Chọn màu sắc</option>
+                                    <option th:each="item : ${ms}" th:value="${item.id}" th:text="${item.ten}"
+                                            th:selected="${item.id == spct.mauSac.id}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="idDongSp" class="form-label">Dòng sản phẩm</label>
+                                <select class="form-select" id="idDongSp" name="idDongSp" required>
+                                    <option value="">Chọn dòng sản phẩm</option>
+                                    <option th:each="item : ${dsp}" th:value="${item.id}" th:text="${item.ten}"
+                                            th:selected="${item.id == spct.dongSp.id}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="namBh" class="form-label">Năm bảo hành</label>
+                                <input type="number" class="form-control" th:field="*{namBh}" id="namBh" name="namBh"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="moTa" class="form-label">Mô tả</label>
+                                <textarea class="form-control" id="moTa" name="moTa" rows="3" th:field="*{moTa}"
+                                          required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="soLuongTon" class="form-label">Số lượng tồn</label>
+                                <input type="number" class="form-control" th:field="*{soLuongTon}" id="soLuongTon"
+                                       name="soLuongTon" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="giaNhap" class="form-label">Giá nhập</label>
+                                <input type="number" class="form-control" th:field="*{giaNhap}" id="giaNhap"
+                                       name="giaNhap" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="giaBan" class="form-label">Giá bán</label>
+                                <input type="number" class="form-control" th:field="*{giaBan}" id="giaBan" name="giaBan"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-dark text-light py-3">
+        <div class="container">
+            <p>&copy; 2023 My Website</p>
+        </div>
+    </footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

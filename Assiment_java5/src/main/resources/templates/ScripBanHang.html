@@ -1,0 +1,22 @@
+<script>
+    document.getElementById('addHoaDonButton').addEventListener('click', function () {
+        fetch('/ban-hang/addHoaDon', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                // You can add any necessary fields here if required
+            })
+        }).then(response => {
+            if (response.ok) {
+                // Refresh the page to show the new invoice
+                window.location.reload();
+            } else {
+                alert('Failed to add Hoa Don');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>

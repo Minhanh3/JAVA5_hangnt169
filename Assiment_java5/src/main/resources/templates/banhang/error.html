@@ -11,22 +11,6 @@
 </div>
 <div class="content ">
     <!--    <h1>Quản lý Sản Phẩm</h1>-->
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <form th:action="@{/san-pham/saveOrUpdateSanPham}" th:object="${sanPham2}" method="post">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2>Thông tin sản phẩm</h2>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Tên sản phẩm</label>
-                            <input type="text" class="form-control" id="ten" name="ten">
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Thêm Sản Phẩm</button>
-            </form>
-        </div>
-    </div>
     <div th:replace="headTagSanPham">
     </div>
     <div>

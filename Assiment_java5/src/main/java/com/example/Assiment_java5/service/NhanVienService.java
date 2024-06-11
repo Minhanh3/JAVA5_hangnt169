@@ -30,4 +30,7 @@ public class NhanVienService {
         nhanVienRepo.deleteById(id);
     }
 
+    public List<NhanVien> findByTenContainingIgnoreCase(String ten) {
+        return nhanVienRepo.findByTenContainingIgnoreCase(ten);
+    }
 }

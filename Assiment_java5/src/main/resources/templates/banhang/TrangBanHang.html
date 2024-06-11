@@ -5,91 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .modal-content {
-            width: 300px;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            background-color: #343a40;
-            padding: 20px;
-        }
-
-        .sidebar a {
-            display: block;
-            color: #fff;
-            text-decoration: none;
-            padding: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .sidebar a:hover {
-            background-color: #474c50;
-        }
-
-        .content {
-            margin-left: 200px;
-            padding: 20px;
-        }
-
-        .sidebar .dropdown-menu {
-            background-color: #474c50;
-            border: none;
-            margin-left: 20px;
-        }
-
-        .sidebar .dropdown-item {
-            color: #fff;
-            padding: 10px 20px;
-            transition: background-color 0.3s;
-        }
-
-        .sidebar .dropdown-item:hover {
-            background-color: #343a40;
-        }
-    </style>
+    <div th:replace="StyleBanHang"></div>
 </head>
 <body>
-<div th:replace="headTag">
-</div>
-<div class="content ">
+<div th:replace="headTag"></div>
+<div class="content">
     <h1>Trang Bán Hàng</h1>
-    <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
-        <div class="input-group w-50">
-            <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
-            <button class="btn btn-primary" type="button">Tìm kiếm</button>
-        </div>
-    </div>
-    <div class="mb-3">
-        <label class="me-2">Trạng thái:</label>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="statusRadio" id="statusAll" value="" checked>
-            <label class="form-check-label" for="statusAll">Tất cả</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="statusRadio" id="statusActive" value="active">
-            <label class="form-check-label" for="statusActive">Đang hoạt động</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="statusRadio" id="statusInactive" value="inactive">
-            <label class="form-check-label" for="statusInactive">Ngừng hoạt động</label>
+    <div th:replace="HeadBanHangAddHoaDon"></div>
+    <div th:replace="HeadBanHang"></div>
+    <div class="row justify-content-end">
+        <div class="col-md-6 text-md-end">
+            <a class="btn btn-warning" th:href="@{/thanhtoan/thanh-toan}">Thanh Toán</a>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <button id="addHoaDonButton" class="btn btn-success">Thêm Hóa Đơn</button>
             <table class="table table-striped">
                 <thead class="thead-dark">
                 <tr>
                     <th class="text-center">STT</th>
                     <th class="text-center">Mã</th>
                     <th class="text-center">Ngày Tạo</th>
-                    <th class="text-center">Ngày Thanh Toán</th>
-                    <th class="text-center">Ngày Nhận</th>
+                    <th class="text-center">Khách Hàng</th>
+                    <th class="text-center">Nhân Viên</th>
                     <th class="text-center">Actions</th>
                 </tr>
                 </thead>
@@ -98,16 +36,20 @@
                     <td class="text-center" th:text="${stat.count}"></td>
                     <td class="text-center" th:text="${item.ma}"></td>
                     <td class="text-center" th:text="${item.ngayTao}"></td>
-                    <td class="text-center" th:text="${item.ngayThanhToan}"></td>
-                    <td class="text-center" th:text="${item.ngayNhan}"></td>
+                    <td class="text-center" th:text="${item.khachHang.ten}"></td>
+                    <td class="text-center" th:text="${item.nhanVien.ten}"></td>
                     <td class="text-center">
-                        <a class="btn btn-primary btn-sm" th:href="@{/ban-hang/trangAddCtHoaDon/{id}(id=${item.id})}">Add Chi tiết</a>
-                    </td>
+                        <a class="btn btn-primary btn-sm" th:href="@{/ban-hang/trangAddCtHoaDon/{id}(id=${item.id})}">Add
+                            Chi tiết</a></td>
                 </tr>
                 </tbody>
             </table>
+            <div th:replace="PhanTrangHoaDon"></div>
         </div>
-        <div class="col-md-6">
+        <div>
+
+        </div>
+        <div class="col-md-12">
             <table class="table table-striped">
                 <thead class="thead-dark">
                 <tr>
@@ -120,19 +62,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item, stat : ${hoaDonChiTiet}">
+                <tr th:each="item, stat : ${hoaDonCT2}">
                     <td class="text-center" th:text="${stat.count}"></td>
                     <td class="text-center" th:text="${item.hoaDon.ma}"></td>
-                    <td class="text-center" th:text="${item.chiTietSp.id}"></td>
+                    <td class="text-center" th:text="${item.chiTietSp.sanPham.ten}"></td>
                     <td class="text-center" th:text="${item.soLuong}"></td>
                     <td class="text-center" th:text="${item.donGia}"></td>
                     <td class="text-center">
                         <a class="btn btn-primary btn-sm" th:href="@{/san-pham/listSpct/__${item.id}__}">Chi tiết</a>
                         <a class="btn btn-primary btn-sm" th:href="@{/san-pham/edit/__${item.id}__}">Edit</a>
+                        <a class="btn btn-primary btn-sm" th:href="@{/san-pham/delete/__${item.id}__}">Delete</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <a class="btn btn-warning" th:href="@{/thanhtoan/thanh-toan}">Thanh Toán</a>
         </div>
     </div>
     <footer class="bg-dark text-light py-3">
@@ -141,63 +89,8 @@
         </div>
     </footer>
 </div>
-<!-- Modal dialog đăng nhập -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Login</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Không thay đổi phần này -->
-</div>
+<div th:replace="LoginFooter"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    document.getElementById('addHoaDonButton').addEventListener('click', function () {
-        fetch('/ban-hang/addHoaDon', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                // You can add any necessary fields here if required
-            })
-        }).then(response => {
-            if (response.ok) {
-                // Refresh the page to show the new invoice
-                window.location.reload();
-            } else {
-                alert('Failed to add Hoa Don');
-            }
-        }).catch(error => {
-            console.error('Error:', error);
-        });
-    });
-
-    // document.querySelectorAll('.addChiTietHoaDonLink').forEach(link => {
-    //     link.addEventListener('click', function(event) {
-    //         event.preventDefault();
-    //         const hoaDonId = this.getAttribute('data-id');
-    //         document.getElementById('hoaDonId').value = hoaDonId;
-    //         const addChiTietHoaDonModal = new bootstrap.Modal(document.getElementById('addChiTietHoaDonModal'));
-    //         addChiTietHoaDonModal.show();
-    //     });
-    // });
-</script>
+<div th:replace="ScripBanHang"></div>
 </body>
 </html>

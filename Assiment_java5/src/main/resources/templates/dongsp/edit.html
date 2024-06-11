@@ -52,42 +52,27 @@
         }
     </style>
 </head>
-<body>
-<div class="sidebar">
-    <a href="/" class="active">Home</a>
-    <a href="/nhan-vien/hien-thi">Trang Nhân Viên</a>
-    <div class="dropdown">
-        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-            Quản lý Sản Phẩm
-        </a>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/san-pham/list">Sản Phẩm</a></li>
-            <li><a class="dropdown-item" href="/mau-sac/hien-thi">Màu Sắc</a></li>
-            <li><a class="dropdown-item" href="/dong-sp/hien-thi">Dòng Sản Phẩm</a></li>
-            <li><a class="dropdown-item" href="/nsx/hien-thi">Nhà Sản Xuất</a></li>
-        </ul>
-    </div>
-    <a href="#">Contact</a>
-    <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+<body><div th:replace="headTag">
 </div>
-
 <div class="content">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <form th:action="${action}" th:object="${nsx}" method="post">
+                <form th:action="${action}" th:object="${dongSpForm}" method="post">
                     <div class="row justify-content-center">
                         <div class="col-md-8 text-center">
-                            <h2>Thông tin Nhà Sản Xuất</h2>
+                            <h2>Thông tin Dòng sản phẩm</h2>
+                            <input type="hidden" th:field="*{id}" />
                             <div class="mb-3">
-                                <label for="ma" class="form-label">Mã Nhà Sản Xuất</label>
-                                <input type="text" class="form-control" th:field="*{ma}" id="ma" name="ma">
+                                <label for="ma" class="form-label">Mã Dòng sản phẩm</label>
+                                <input type="text" class="form-control" th:field="*{ma}" id="ma" name="ma" required>
                             </div>
                             <div class="mb-3">
-                                <label for="ten" class="form-label">Tên Nhà Sản Xuất</label>
-                                <input type="text" class="form-control" th:field="*{ten}" id="ten" name="ten">
+                                <label for="ten" class="form-label">Tên Dòng sản phẩm</label>
+                                <input type="text" class="form-control" th:field="*{ten}" id="ten" name="ten" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Lưu</button>
+                            <a th:href="@{/dong-sp/list}" class="btn btn-secondary">Hủy</a>
                         </div>
                     </div>
                 </form>

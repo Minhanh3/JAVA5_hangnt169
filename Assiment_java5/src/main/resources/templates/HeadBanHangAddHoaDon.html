@@ -1,0 +1,23 @@
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="modal-body">
+            <form th:action="@{/ban-hang/addHoaDon}" th:object="${hoaDonNew}" method="post">
+                <div class="mb-3">
+                    <label for="idNhanVien" class="form-label">Nhân Viên</label>
+                    <select class="form-select" id="idNhanVien" name="idNhanVien">
+                        <option value="">Chọn nhân viên</option>
+                        <option th:each="nv : ${nhanViens}" th:value="${nv.id}" th:text="${nv.ten}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="idKhachHang" class="form-label">Khách Hàng</label>
+                    <select class="form-select" id="idKhachHang" name="idKhachHang">
+                        <option value="">Chọn khách hàng</option>
+                        <option th:each="kh : ${khachHangs}" th:value="${kh.id}" th:text="${kh.ten}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Thêm Hóa Đơn</button>
+            </form>
+        </div>
+    </div>
+</div>
